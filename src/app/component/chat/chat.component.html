@@ -1,0 +1,38 @@
+
+    <div>Channels</div>
+    <div>
+      <ul *ngIf="channels">
+        <li  [ngClass]="currentChannel?.sid === channel?.sid ? 'active' : ''" *ngFor="let channel of channels;">
+          <a href="#" (click)="enterChannel(channel.sid)"># {{channel?.friendlyName}}</a>
+        </li>
+    </ul>
+    </div>
+  
+    <div >
+        <button href="#" (click)="getChannels()">Get Channels</button>
+        <!-- <i class="fa fa-refresh" [ngClass]="isGettingChannels ? 'fa-spin' : ''"></i> -->
+        <button href="#" (click)="createChannel()">Create Channel</button>
+    </div>
+
+    <div *ngIf="currentChannel">#{{currentChannel?.friendlyName}}</div>
+
+    <div #chatDisplay>
+        <div *ngFor="let message of messages">
+          <div><span >{{message?.author}}</span>&nbsp;<small>{{message?.dateUpdated | date: 'h:mm a'}}</small></div>
+          <div>{{message?.body}}</div>
+        </div>
+      </div>
+      <form (submit)="sendMessage()" autocomplete="off" name="chatForm" id="chatForm">
+        <div>
+          <input type="text" id="chatMessage" name="chatMessage" #chatElement class="form-control" [(ngModel)]="chatMessage" />
+          <span>
+          <button type="submit">></button>
+        </span>
+        </div>
+      </form>
+      <div *ngIf="membersTyping.length">
+        <span>{{whosTyping()}} is typing...</span>
+      </div>
+
+
+
